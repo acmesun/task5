@@ -1,10 +1,9 @@
 package by.lukyanets.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.Date;
 
+@Table
 @Entity
 public class UserEntity {
     @Id
@@ -14,6 +13,46 @@ public class UserEntity {
     private String password;
     @Column
     private String email;
+    @Column
+    private String name;
+    @Column
+    private Date dateOFRegistration;
+    @Column
+    private Date dateOfLastLogin;
+    @Column
+    private boolean active = true;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Date getDateOfRegistration() {
+        return dateOFRegistration;
+    }
+
+    public void setDateOFRegistration(Date dateOFRegistration) {
+        this.dateOFRegistration = dateOFRegistration;
+    }
+
+    public Date getDateOfLastLogin() {
+        return dateOfLastLogin;
+    }
+
+    public void setDateOfLastLogin(Date dateOfLastLogin) {
+        this.dateOfLastLogin = dateOfLastLogin;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
 
     public Long getId() {
         return id;

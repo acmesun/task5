@@ -28,11 +28,12 @@ public class EmailBasedUserDetailsService implements UserDetailsService {
         return new org.springframework.security.core.userdetails.User(
                 userEntity.getEmail(),
                 userEntity.getPassword(),
-                true,
+                userEntity.isActive(),
                 true,
                 true,
                 true,
                 Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER"))
         );
     }
+
 }
