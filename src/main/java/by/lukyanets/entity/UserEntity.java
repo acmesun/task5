@@ -1,5 +1,7 @@
 package by.lukyanets.entity;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -16,8 +18,10 @@ public class UserEntity {
     @Column
     private String name;
     @Column
-    private Date dateOFRegistration;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dateOfRegistration;
     @Column
+    @Temporal(TemporalType.TIMESTAMP)
     private Date dateOfLastLogin;
     @Column
     private boolean active = true;
@@ -31,11 +35,11 @@ public class UserEntity {
     }
 
     public Date getDateOfRegistration() {
-        return dateOFRegistration;
+        return dateOfRegistration;
     }
 
-    public void setDateOFRegistration(Date dateOFRegistration) {
-        this.dateOFRegistration = dateOFRegistration;
+    public void setDateOfRegistration(Date dateOFRegistration) {
+        this.dateOfRegistration = dateOFRegistration;
     }
 
     public Date getDateOfLastLogin() {

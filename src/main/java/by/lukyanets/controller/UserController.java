@@ -38,10 +38,10 @@ public class UserController {
     }
 
     @PostMapping("/login/api")
-    public ModelAndView loginApi(@ModelAttribute("user") @Valid UserDto userDto) {
+    public String loginApi(@ModelAttribute("user") @Valid UserDto userDto) {
         Authentication auth = authProvider.authenticate(new UsernamePasswordAuthenticationToken(userDto.getEmail(), userDto.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(auth);
-        return new ModelAndView("redirect:/home", "user", userDto);
+        return "redirect:/home";
     }
 
     @GetMapping("/login/view")

@@ -1,3 +1,4 @@
+<!--suppress ALL -->
 <html>
 <head>
     <meta charset="utf-8">
@@ -8,6 +9,8 @@
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
     <link href="https://getbootstrap.com/docs/4.0/examples/signin/signin.css" rel="stylesheet" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <style>
         body {
             padding-top: 40px;
@@ -16,16 +19,87 @@
         }
 
         .container {
-            max-width: 400px;
             padding: 15px;
             margin: 0 auto;
         }
+
+        .user-table {
+            border: solid aqua;
+        }
+
+        td {
+            width: 120px;
+            height: 40px;
+            text-align: center;
+            border: solid aqua;
+        }
+        .fa-unlock{
+            color: chartreuse;
+        }
+        .fa-trash{
+            color: midnightblue;
+        }
+
+
     </style>
+    <script>
+        function eventCheckBox() {
+            const statusCheck = document.getElementById("select-all").checked
+            let checkboxs = document.getElementsByTagName("input");
+            for (let i = 1; i < checkboxs.length; i++) {
+                checkboxs[i].checked = statusCheck
+            }
+        }
+    </script>
+
 </head>
 <body>
+
+
 <div class="container">
-    <p><span th:text="${user.username}">, welcome!</span></p>
+    <form action="#" th:action="@{'/home/update'}" th:method="post" th:object="${users}">
+        <input id="select-all" type="checkbox" onclick="eventCheckBox()"/>
+        <select name="action">
+            <option>Block</option>
+            <option>Unblock</option>
+            <option>Delete</option>
+        </select>
+
+        <button type="submit" class="btn btn-outline-info btn-sm">Block</button>
+        <a href="#">
+            <i class="fa fa-unlock fa-2x"></i>
+        </a>
+        <a href="#">
+            <span class="glyphicon glyphicon-trash fa-2x"></span>
+        </a>
+
+        <table class="user-table">
+
+            <tr>
+                <td>select</td>
+                <td>ID</td>
+                <td>name</td>
+                <td>e-mail</td>
+                <td>date of registration</td>
+                <td>date of last login</td>
+                <td>status</td>
+            </tr>
+            <tr th:each="user,iterator: ${users}">
+                <td>
+                    <input th:name="${user.email}" type="checkbox" name="Block" th:checked="${!user.active}">
+                </td>
+                <td th:text="${user.id}"/>
+                <td th:text="${user.name}"/>
+                <td th:text="${user.email}"/>
+                <td th:text="${#dates.format(user.dateOfRegistration, 'dd-MM-yyyy HH:mm')}"></td>
+                <td th:text="${#dates.format(user.dateOfLastLogin, 'dd-MM-yyyy HH:mm')}"></td>
+                <td th:text="${user.active}"/>
+            </tr>
+        </table>
+    </form>
     <a type="button" th:href="@{logout}" class="btn btn-lg btn-block">Logout</a>
+
 </div>
 </body>
+
 </html>

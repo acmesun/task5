@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.Collections;
+import java.util.Date;
+
 @Service
 @Transactional
 public class EmailBasedUserDetailsService implements UserDetailsService {
@@ -25,6 +27,8 @@ public class EmailBasedUserDetailsService implements UserDetailsService {
         if (userEntity == null) {
             throw new UsernameNotFoundException("No user found with login " + email);
         }
+        userEntity.setDateOfLastLogin(new Date());
+        repository.save(userEntity);
         return new org.springframework.security.core.userdetails.User(
                 userEntity.getEmail(),
                 userEntity.getPassword(),
