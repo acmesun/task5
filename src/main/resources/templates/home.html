@@ -1,5 +1,5 @@
 <!--suppress ALL -->
-<html>
+<html xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -33,10 +33,12 @@
             text-align: center;
             border: solid aqua;
         }
-        .fa-unlock{
+
+        .fa-unlock {
             color: chartreuse;
         }
-        .fa-trash{
+
+        .fa-trash {
             color: midnightblue;
         }
 
@@ -58,20 +60,15 @@
 
 <div class="container">
     <form action="#" th:action="@{'/home/update'}" th:method="post" th:object="${users}">
-        <input id="select-all" type="checkbox" onclick="eventCheckBox()"/>
-        <select name="action">
-            <option>Block</option>
-            <option>Unblock</option>
-            <option>Delete</option>
-        </select>
+        <input id="select-all" type="checkbox" onclick="eventCheckBox()">Select all
 
-        <button type="submit" class="btn btn-outline-info btn-sm">Block</button>
-        <a href="#">
+        <button type="submit" class="btn btn-outline-info btn-sm" value="Block" name="Value">Block</button>
+        <button type="submit" class="btn btn-outline-info btn-sm" value="Unblock"  name="Value">
             <i class="fa fa-unlock fa-2x"></i>
-        </a>
-        <a href="#">
+        </button>
+        <button type="submit" class="btn btn-outline-info btn-sm" value="Delete" name="Value">
             <span class="glyphicon glyphicon-trash fa-2x"></span>
-        </a>
+        </button>
 
         <table class="user-table">
 

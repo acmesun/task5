@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
@@ -28,23 +27,25 @@ public class HomeController {
 
     @PostMapping("/home/update")
     public String unblockUsers(@RequestBody MultiValueMap<String, String> formData) {
+        List<String> listFromData = formData.get("Value");
         Set<String> checkedEmails = formData.keySet();
-        Collection<List<String>> values = formData.values();
-        for (List<String> list : values) {
-            String act = list.get(0);
-            switch (act) {
-                case "Block":
-                    service.blockUserAccounts(checkedEmails);
-                    break;
-                case "Unblock":
-                    service.unblockUserAccounts(checkedEmails);
-                    break;
-                case "Delete":
-                    service.deleteUserAccounts(checkedEmails);
-                    break;
-            }
+        checkedEmails.remove("Value");
+        String act = listFromData.get(0);
+        boolean logoutUser = false;
+        switch (act) {
+            case "Block":
+                service.blockUserAccounts(checkedEmails);
+                logoutUser = true;
+                break;
+            case "Unblock":
+                service.unblockUserAccounts(checkedEmails);
+                break;
+            case "Delete":
+                service.deleteUserAccounts(checkedEmails);
+                logoutUser = true;
+                break;
         }
-        return isCurrentUserIn(checkedEmails) ? "redirect:/logout" : "redirect:/home";
+        return logoutUser && isCurrentUserIn(checkedEmails) ? "redirect:/logout" : "redirect:/home";
     }
 
     private boolean isCurrentUserIn(Set<String> emails) {
